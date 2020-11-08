@@ -18,7 +18,7 @@ $().ready (() => {
     fetch = () => {
         let sp = searcParameters();
         $.get({
-            url: `http://127.0.0.1:3002/Asiakas?${sp}`,
+            url: `http://127.0.0.1:3002/Asiakas${sp}`,
             success: (result) => {
                 showResultInTable(result, astys);
         }});
@@ -166,7 +166,7 @@ deleteCustomer = (key) => {
         return;
     }
     $.delete({
-        url: `http://127.0.0.1:3002/Asiakas?avain=${key}`,
+        url: `http://127.0.0.1:3002/Asiakas${key}`,
         success: (result) => {
             fetch();
         }

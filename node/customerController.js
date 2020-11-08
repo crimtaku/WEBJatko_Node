@@ -8,9 +8,9 @@ var mysql = require('mysql');
 
 var connection = mysql.createConnection({
   host: 'localhost', //tietokantapalvelimen osoite
-  port : 3306, //oletuksena portti 3006 
-  user : "root", //kehitystarkoituksissa root on ok
-  password:"Natsumikohaku1324", //voi jättää tyhjäksi?
+  port : 3306, //oletuksena portti 3006, vaihda oma portti
+  user : "root", //vaihda oma root
+  password:"Natsumikohaku1324", //vaihda oma salasana
   database:"asiakas",
 });
 
@@ -36,19 +36,23 @@ module.exports =
       //tähän connection.query... katso fetchTypes
       //Haettaessa yksittäistä saadaan vaatimukset tavalla req.query.nimi
       var sql= "SELECT * FROM Asiakas WHERE 1=1";
-      console.log(req.nimi);
-      console.log(req.osoite);
-      console.log(req.asiakastyyppi);
+      console.log(req.query.nimi);
+      console.log(req.query.osoite);
+      console.log(req.query.asiakastyyppi);
       if (req.query.nimi!=undefined){
-        sql+=" AND nimi="+req.query.nimi+"%";
+        console.log(sql+=" AND nimi LIKE '"+req.query.nimi+"%'");
+        console.log(JSON.stringify(req.query.nimi));
+        sql+=" AND nimi LIKE '"+req.query.nimi+"%'";
       }
 
       if (req.query.osoite!=undefined){
-        sql+=" AND osoite="+req.query.osoite+"%";
+        console.log(sql+=" AND osoite='"+req.query.osoite+"%'");
+        sql+=" AND osoite LIKE '"+req.query.osoite+"%'";
       }
 
       if (req.query.asiakastyyppi!=undefined){
-        sql+=" AND asiakastyyppi="+req.query.asiakastyyppi+"%";
+        console.log(sql+=" AND ASTY_AVAIN LIKE '"+req.query.asiakastyyppi+"%'");
+        sql+=" AND ASTY_AVAIN LIKE '"+req.query.asiakastyyppi+"%'";
       }
 
       connection.query(sql, function(error, results, fields){
