@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
   host: 'localhost', //tietokantapalvelimen osoite
   port : 3306, //oletuksena portti 3006, vaihda oma portti
   user : "root", //vaihda oma root
-  password:"Natsumikohaku1324", //vaihda oma salasana
+  password:"", //vaihda oma salasana
   database:"asiakas",
 });
 
