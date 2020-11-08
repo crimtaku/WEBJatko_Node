@@ -17,9 +17,11 @@ $().ready (() => {
     // haetaan data
     fetch = () => {
         let sp = searcParameters();
+        console.log("Fetch datalla "+sp)
         $.get({
             url: `http://127.0.0.1:3002/Asiakas${sp}`,
             success: (result) => {
+                console.log("Results: "+result)
                 showResultInTable(result, astys);
         }});
     }
