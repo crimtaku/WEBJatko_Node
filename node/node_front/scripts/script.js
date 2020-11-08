@@ -3,7 +3,7 @@ $().ready (() => {
 
     // haetaan asiakastyypit
     $.get({
-        url: "https://codez.savonia.fi/jussi/api/asiakas/tyypit.php",
+        url: "http://127.0.0.1:3002/types",
         success: (result) => {
             astys = result;
             result.forEach((r) => {
@@ -18,7 +18,7 @@ $().ready (() => {
     fetch = () => {
         let sp = searcParameters();
         $.get({
-            url: `https://codez.savonia.fi/jussi/api/asiakas/haku.php?${sp}`,
+            url: `http://127.0.0.1:3002/Asiakas?${sp}`,
             success: (result) => {
                 showResultInTable(result, astys);
         }});
@@ -63,7 +63,7 @@ $().ready (() => {
 
     // tekee post-kutsun palvelimelle ja vastauksen saatuaan jatkaa
     addCust = (param) => {
-        $.post("https://codez.savonia.fi/jussi/api/asiakas/lisaa.php", param)
+        $.post("http://127.0.0.1:3002/Asiakas", param)
             .then((data) => {
                 showAddCustStat(data);
                 $('#addCustDialog').dialog("close");
@@ -165,8 +165,8 @@ deleteCustomer = (key) => {
     if (isNaN(key)) {
         return;
     }
-    $.get({
-        url: `https://codez.savonia.fi/jussi/api/asiakas/poista.php?avain=${key}`,
+    $.delete({
+        url: `http://127.0.0.1:3002/Asiakas?avain=${key}`,
         success: (result) => {
             fetch();
         }

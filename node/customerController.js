@@ -35,7 +35,23 @@ module.exports =
     fetchAll: function(req, res){
       //tähän connection.query... katso fetchTypes
       //Haettaessa yksittäistä saadaan vaatimukset tavalla req.query.nimi
-      connection.query('SELECT Avain, Nimi, Osoite, PostiNro, PostiTmp, LuontiPvm, Asty_Avain FROM Asiakas', function(error, results, fields){
+      var sql= "SELECT * FROM Asiakas WHERE 1=1";
+      console.log(req.nimi);
+      console.log(req.osoite);
+      console.log(req.asiakastyyppi);
+      if (req.query.nimi!=undefined){
+        sql+=" AND nimi="+req.query.nimi+"%";
+      }
+
+      if (req.query.osoite!=undefined){
+        sql+=" AND osoite="+req.query.osoite+"%";
+      }
+
+      if (req.query.asiakastyyppi!=undefined){
+        sql+=" AND asiakastyyppi="+req.query.asiakastyyppi+"%";
+      }
+
+      connection.query(sql, function(error, results, fields){
         if ( error ){
           console.log("virhe haettaessa dataa Asiakas-taulusta. " + error);
           res.status(500);
@@ -47,8 +63,9 @@ module.exports =
           res.json(results); //onnistunut data lähetetään selaimelle
         }
     });
-
+    
     },
+
 
     create: function(req, res){
       //connection.query...
