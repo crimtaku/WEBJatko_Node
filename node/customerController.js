@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
   host: 'localhost', //tietokantapalvelimen osoite
   port : 3306, //oletuksena portti 3006, vaihda oma portti
   user : "root", //vaihda oma root
-  password:"", //vaihda oma salasana
+  password:"Natsumikohaku1324", //vaihda oma salasana
   database:"asiakas",
 });
 
@@ -73,10 +73,49 @@ module.exports =
 
 
     create: function(req, res){
+
+      var dateObj = new Date();
+      var month = dateObj.getMonth() + 1; //months from 1-12
+      var day = dateObj.getDate();
+      var year = dateObj.getFullYear();
+
+      var newdate = year + "-" + month + "-" + day;
+
+      var sql="INSERT INTO asiakas (nimi, osoite, postinro, postitmp, luontipvm, asty_avain) VALUES ('";
+
+      sql+= req.body.nimi + "', '" + req.body.osoite + "', '" + req.body.postinro + "', '" + req.body.postitmp + "', '" + newdate +  "', '" + req.body.asty_avain + "')";
+
+      console.log(sql);
+
+      if (req.body.nimi==""  || req.body.osoite==""  || req.body.postinro==""  || req.body.postitmp=="" || req.body.asty_avain=="" ){
+        //Jokin tarvittava data puuttui
+        res.status(418);
+        res.send("Tarvittava datakenttä oli tyhjä");
+      }
+
+      else{
+        //Kaikki tarvittavat kentät löytyivät, data lähetetään eteenpäin
+        connection.query(sql, function(error, results, fields){
+          if ( error ){
+            console.log("virhe lisättäessä dataa Asiakas-tauluun. " + error);
+            res.status(500);
+            res.json({"status" :"Ei toimi"});
+          }
+          else
+          {
+            console.log("Data = "+JSON.stringify(results))
+            res.status(201);
+            res.json(results); //onnistunut data lähetetään selaimelle
+          }
+        });
+      }
+
+
+
+
       //connection.query...
-      console.log("Data="+JSON.stringify(reg.body))
-      console.log(reg.body.nimi)
-      res.send("Kutsuttiin create");
+      console.log("Data="+JSON.stringify(req.body))
+      console.log(req.body.nimi)
     },
 
     update: function(req, res){
@@ -84,8 +123,27 @@ module.exports =
     },
 
     delete : function (req, res) {
+
+      var sql="DELETE FROM asiakas WHERE avain=reg.params";
+
+      connection.query(sql, function(error, results, fields){
+        if ( error ){
+          console.log("virhe haettaessa dataa Asiakas-taulusta. " + error);
+          res.status(500);
+          res.json({"status" :"Ei toimi"});
+        }
+        else
+        {
+          console.log("Data = "+JSON.stringify(results))
+          res.status(200);
+          res.json(results); //onnistunut data lähetetään selaimelle
+        }
+    });
+
+
       console.log("Body= "+JSON.stringify(reg.body))
       console.log("Params= "+JSON.stringify(reg.params))
       res.send("Kutsuttiin delete");
     }
+
 }
