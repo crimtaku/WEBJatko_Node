@@ -3,5 +3,5 @@ Tehtävät sijaitsevat NODE kansiossa, sen ulkopuolinen tavara on vanhaa versiot
 
 customer controller skriptiin pitää päivittää oman kannan tiedot testausta varten.
 
-Serveri toimii, käyttöliittymä ei. Hae kaikki lähettää pyynnön ja saa vastauksen json muodossa muttei näytä sitä, tarkennettu haku ei lähde ollenkaan.
-molemmat tehtävät toimivat käyttämällä url: http://127.0.0.1:3002/Asiakas ja kirjoittamalla haut suoraan urlin perään.
+Tehtävät 4,5,6,8 ja 9 tehty. Käyttöliittymässä haku toimii ilman hakuehtoja muttei hakuehtojen kanssa. Uuden käyttäjän lisäys toimii jotenkuten (heitti virheen kun testasin mutta tieto meni kantaan) kun taas käyttäjän poisto ei toimi käyttöliittymän kautta.
+Kaikki ominaisuudet toimivat ongelmitta postmanin kautta.
