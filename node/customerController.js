@@ -124,11 +124,12 @@ module.exports =
 
     delete : function (req, res) {
 
-      var sql="DELETE FROM asiakas WHERE avain=reg.params";
+      var sql="DELETE FROM asiakas WHERE avain='"+req.params.id+"'";
+      console.log(sql);
 
       connection.query(sql, function(error, results, fields){
         if ( error ){
-          console.log("virhe haettaessa dataa Asiakas-taulusta. " + error);
+          console.log("virhe poistaessa dataa Asiakas-taulusta. " + error);
           res.status(500);
           res.json({"status" :"Ei toimi"});
         }
@@ -141,9 +142,9 @@ module.exports =
     });
 
 
-      console.log("Body= "+JSON.stringify(reg.body))
-      console.log("Params= "+JSON.stringify(reg.params))
-      res.send("Kutsuttiin delete");
+      console.log("Body= "+JSON.stringify(req.body))
+      console.log("Params= "+JSON.stringify(req.params))
+      //res.send("Kutsuttiin delete");
     }
 
 }
