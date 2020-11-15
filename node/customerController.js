@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
 module.exports = 
 {
     fetchTypes: function (req, res) {  
-      connection.query('SELECT Avain, Lyhenne, Selite FROM Asiakastyyppi', function(error, results, fields){
+      connection.query('SELECT avain, lyhenne, selite FROM Asiakastyyppi', function(error, results, fields){
         if ( error ){
           console.log("virhe haettaessa dataa Asiakas-taulusta. " + error);
           res.status(500);
@@ -35,7 +35,7 @@ module.exports =
     fetchAll: function(req, res){
       //tähän connection.query... katso fetchTypes
       //Haettaessa yksittäistä saadaan vaatimukset tavalla req.query.nimi
-      var sql= "SELECT * FROM Asiakas WHERE 1=1";
+      var sql= "SELECT avain, nimi, osoite, postinro, postitmp, luontipvm, asty_avain FROM Asiakas WHERE 1=1";
       console.log(req.query.nimi);
       console.log(req.query.osoite);
       console.log(req.query.asiakastyyppi);
@@ -51,8 +51,8 @@ module.exports =
       }
 
       if (req.query.asiakastyyppi!=undefined){
-        console.log(sql+=" AND ASTY_AVAIN LIKE '"+req.query.asiakastyyppi+"%'");
-        sql+=" AND ASTY_AVAIN LIKE '"+req.query.asiakastyyppi+"%'";
+        console.log(sql+=" AND asty_avain LIKE '"+req.query.asiakastyyppi+"%'");
+        sql+=" AND asty_avain LIKE '"+req.query.asiakastyyppi+"%'";
       }
 
       connection.query(sql, function(error, results, fields){
